@@ -16,38 +16,20 @@ class PokemonDetailView: UIView {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    
-    let numberLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, numberLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+//    let detailLabel = PokemonDetailLabelView()
     
    private func setupLayout() {
+//       detailLabel.layer.cornerRadius = 20
+//       detailLabel.translatesAutoresizingMaskIntoConstraints = false
+//       detailLabel.clipsToBounds = true
         addSubview(imageView)
-        addSubview(stackView)
+//        addSubview(detailLabel)
         
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 200),
-            imageView.widthAnchor.constraint(equalToConstant: 200)
+            imageView.widthAnchor.constraint(equalToConstant: 200),
         ])
     }
     
@@ -80,8 +62,8 @@ class PokemonDetailView: UIView {
     
     func configure(detail: Detail) {
         DispatchQueue.main.async {
-            self.nameLabel.text = detail.name
-            self.numberLabel.text = "#\(detail.id)"
+//            self.detailLabel.nameLabel.text = detail.name
+//            self.detailLabel.numberLabel.text = "#\(detail.id)"
             self.loadImage(url: detail.imageUrl)
         }
         

@@ -17,9 +17,19 @@ class PokemonDetailViewController: UIViewController {
         return view
     }()
     
+    let detailLabelView: PokemonDetailLabelView = {
+       let view = PokemonDetailLabelView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .red
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
     private func setupUI(){
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray4
         view.addSubview(contentView)
+        view.addSubview(detailLabelView)
         setupConstraints()
     }
     
@@ -28,7 +38,12 @@ class PokemonDetailViewController: UIViewController {
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+            contentView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            
+            detailLabelView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),
+            detailLabelView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            detailLabelView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            detailLabelView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -56,6 +71,7 @@ class PokemonDetailViewController: UIViewController {
 extension PokemonDetailViewController: PokemonDetailViewModelDelegate{
     func didSuccessfullyFetchPokemonDetail(pokemon: Detail) {
         contentView.configure(detail: pokemon)
+        detailLabelView.configure(detail: pokemon)
     }
     
     func didFailToFetchPokemonDetail(error: any Error) {
