@@ -12,21 +12,24 @@ class PokemonCell: UITableViewCell {
     
     let backGroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(.red)
+        view.backgroundColor = .systemGray
+        view.layer.cornerRadius = 8
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let numberLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .systemGray5
+        label.font = .systemFont(ofSize: 13, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .systemGray6
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,7 +44,7 @@ class PokemonCell: UITableViewCell {
     }()
     
     private lazy var infoView: UIStackView = {
-        let info = UIStackView(arrangedSubviews: [nameLabel, numberLabel])
+        let info = UIStackView(arrangedSubviews: [numberLabel, nameLabel])
         info.axis = .vertical
         info.spacing = 4
         info.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +59,7 @@ class PokemonCell: UITableViewCell {
         backGroundView.addSubview(pokemonImage)
         backGroundView.addSubview(infoView)
         
-        contentView.backgroundColor = .systemBlue
+        contentView.backgroundColor = .clear
         setupLayout()
     }
     
@@ -71,18 +74,19 @@ class PokemonCell: UITableViewCell {
             backGroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             backGroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
             
-            pokemonImage.leadingAnchor.constraint(equalTo: backGroundView.leadingAnchor, constant: 2),
+            pokemonImage.trailingAnchor.constraint(equalTo: backGroundView.trailingAnchor, constant: -8),
             pokemonImage.topAnchor.constraint(equalTo: backGroundView.topAnchor, constant: 2),
             pokemonImage.widthAnchor.constraint(equalToConstant: 90),
             pokemonImage.heightAnchor.constraint(equalToConstant: 90),
             
-            infoView.leadingAnchor.constraint(equalTo: pokemonImage.trailingAnchor, constant: 8)
+            infoView.topAnchor.constraint(equalTo: backGroundView.topAnchor, constant: 8),
+            infoView.leadingAnchor.constraint(equalTo: backGroundView.leadingAnchor, constant: 8)
         ])
     }
     
     func configure(with pokemon: Pokemon){
         nameLabel.text = pokemon.name
-        numberLabel.text = "#\(String(pokemon.number).extractPokemonNumber()!)"
+        numberLabel.text = String(format: "#%03d", pokemon.number)
         loadImage(url: pokemon.pokemonImage)
     }
     
