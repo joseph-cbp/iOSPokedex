@@ -27,7 +27,6 @@ class PokemonDetailViewController: UIViewController {
     }()
     
     private func setupUI(){
-        view.backgroundColor = .systemGray4
         view.addSubview(contentView)
         view.addSubview(detailLabelView)
         setupConstraints()
@@ -36,8 +35,8 @@ class PokemonDetailViewController: UIViewController {
     private func setupConstraints(){
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
             
             detailLabelView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),
@@ -66,12 +65,38 @@ class PokemonDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setupGradient(pokemon: Detail) {
+        let gradient = CAGradientLayer()
+        
+        let colors = pokemon.types.map { $0.getColor().cgColor }
+        gradient.colors = colors
+        gradient.startPoint = .init(x: 0.5, y: 0)
+        gradient.endPoint = .init(x: 0.5, y: 1)
+        gradient.type = .radial
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let gradient = view.layer.sublayers?.first as? CAGradientLayer {
+            gradient.frame = view.bounds
+        }
+    }
+    
+    private func setupBackgroundColor(pokemon: Detail) {
+        DispatchQueue.main.async{ [weak self] in
+            self?.view.backgroundColor = pokemon.types.first?.getColor()
+        }
+    }
 }
 
 extension PokemonDetailViewController: PokemonDetailViewModelDelegate{
     func didSuccessfullyFetchPokemonDetail(pokemon: Detail) {
         contentView.configure(detail: pokemon)
         detailLabelView.configure(detail: pokemon)
+        setupBackgroundColor(pokemon: pokemon)
     }
     
     func didFailToFetchPokemonDetail(error: any Error) {
