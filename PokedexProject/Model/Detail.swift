@@ -11,4 +11,5 @@ struct Detail: Decodable {
     let height: Double
     let weight: Double
     let imageUrl: String
+    let types: [PokemonTypes]
 }
