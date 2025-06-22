@@ -47,6 +47,15 @@ class PokemonDetailLabelView: UIView {
         return label
     }()
     
+    let statusStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -61,6 +70,7 @@ class PokemonDetailLabelView: UIView {
         addSubview(numberBackground)
         nameBackground.addSubview(nameLabel)
         numberBackground.addSubview(numberLabel)
+        addSubview(statusStackView)
         
         setupConstraints()
     }
@@ -83,13 +93,27 @@ class PokemonDetailLabelView: UIView {
             nameLabel.centerYAnchor.constraint(equalTo: nameBackground.centerYAnchor),
             nameLabel.centerXAnchor.constraint(equalTo: nameBackground.centerXAnchor),
             
+            statusStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
+            statusStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            statusStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
         ])
+    }
+    
+    private func populateStackView(with status: [StatusDetail], color: UIColor){
+        for stat in status {
+            let statusView = PokemonStatusBar()
+            statusView.configure(with: stat, color: color)
+            statusStackView.addArrangedSubview(statusView)
+        }
     }
     
     func configure(detail: Detail) {
         DispatchQueue.main.async { [weak self] in
             self?.nameLabel.text = detail.name
             self?.numberLabel.text = "#\(String(detail.id).extractPokemonNumber() ?? 000)"
+            
+            self?.populateStackView(with: detail.stats, color: detail.types.first?.getColor() ?? .gray)
         }
     }
 }
