@@ -11,6 +11,7 @@ class DetailResponse: Codable {
     let height: Double
     let weight: Double
     let types: [TypeData]
+    let stats: [StatusData]
     
     
     func toDomainModel() -> Detail {
@@ -23,7 +24,8 @@ class DetailResponse: Codable {
             height: height,
             weight: weight,
             imageUrl: imageUrl,
-            types: types.compactMap{ PokemonTypes(rawValue: $0.type.name)}
+            types: types.compactMap{ PokemonTypes(rawValue: $0.type.name)},
+            stats: stats.compactMap{StatusDetail(baseStat: $0.base_stat, name: $0.stat.name)}
         )
     }
 }
@@ -36,3 +38,12 @@ struct TypeElement: Codable {
     let name: String
 }
 
+struct StatusData: Codable {
+    let base_stat: Int
+    let stat: StatusElement
+    
+}
+
+struct StatusElement: Codable {
+    let name: String
+}

@@ -12,4 +12,10 @@ struct Detail: Decodable {
     let weight: Double
     let imageUrl: String
     let types: [PokemonTypes]
+    let stats: [StatusDetail]
+}
+
+struct StatusDetail: Decodable {
+    let baseStat: Int
+    let name: String
 }
