@@ -21,7 +21,7 @@ class PokemonDetailViewController: UIViewController {
        let view = PokemonDetailLabelView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.layer.masksToBounds = true
         return view
     }()
