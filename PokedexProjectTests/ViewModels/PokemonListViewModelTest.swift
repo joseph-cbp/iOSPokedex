@@ -17,4 +17,8 @@ final class PokemonListViewModelTest: XCTestCase {
         super.setUp()
         suit = PokemonListViewModel()
     }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
 }
