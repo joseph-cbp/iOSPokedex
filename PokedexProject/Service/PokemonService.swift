@@ -6,8 +6,12 @@
 //
 import Foundation
 
-class PokemonService {
-    let networkManager: NetworkManager = .init()
+class PokemonService : PokemonServiceProtocol {
+    let networkManager: NetworkManagerProtocol
+    
+    init(networkManager: NetworkManagerProtocol = NetworkManager()) {
+        self.networkManager = networkManager
+    }
     
     func fetchPokemonList(completion: @escaping (Result<[Pokemon], Error>) -> Void) {
         let urlString = "https://pokeapi.co/api/v2/pokemon?limit=151"

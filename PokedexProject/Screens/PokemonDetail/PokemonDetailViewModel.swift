@@ -14,12 +14,12 @@ protocol PokemonDetailViewModelDelegate: AnyObject{
 
 class PokemonDetailViewModel {
     let url: URL?
-    let service: PokemonService
+    let service: PokemonServiceProtocol
     weak var delegate: PokemonDetailViewModelDelegate?
     
-    init(url: URL?) {
+    init(url: URL?, service: PokemonServiceProtocol = PokemonService()) {
         self.url = url
-        self.service = PokemonService()
+        self.service = service
     }
     
     func fetchPokemonDetail(){

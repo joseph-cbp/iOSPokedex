@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkManager {
+class NetworkManager: NetworkManagerProtocol {
     
     func fetch<T: Decodable>(
         from urlString: String,
