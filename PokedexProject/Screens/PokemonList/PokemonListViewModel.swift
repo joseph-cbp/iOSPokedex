@@ -8,8 +8,12 @@ import Foundation
 
 class PokemonListViewModel {
     weak var delegate: PokemonListViewModelDelegate?
-    private let pokemonService: PokemonService = .init()
+    private let pokemonService: PokemonServiceProtocol
     private(set) var pokemons: [Pokemon] = []
+    
+    init(pokemonService: PokemonServiceProtocol) {
+        self.pokemonService = pokemonService
+    }
     
     func fetchPokemons() {
         pokemonService.fetchPokemonList { [weak self] result in

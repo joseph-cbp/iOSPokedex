@@ -17,4 +17,20 @@ struct MockResponses {
         
         return PokemonListResponse(results: [pokemon1, pokemon2])
     }
+    
+    static func createMockPokemonDetailResponse() -> Detail{
+        let types: [PokemonTypes] = [.grass, .poison]
+        let status: [StatusDetail] = [
+            .init(baseStat: 45, name: "hp"),
+            .init(baseStat: 49, name: "attack"),
+            .init(baseStat: 49, name: "defense"),
+            .init(baseStat: 65, name: "special-attack"),
+            .init(baseStat: 65, name: "special-defense"),
+            .init(baseStat: 45, name: "speed")
+        ]
+        
+        let detail = Detail(id: 1, name: "bulbasaur", height: 7.0, weight: 69.0, imageUrl: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", types: types, stats: status)
+        
+        return detail
+    }
 }

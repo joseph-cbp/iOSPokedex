@@ -7,7 +7,7 @@
 import UIKit
 
 class PokemonListViewController: UIViewController {
-    private lazy var viewModel: PokemonListViewModel = .init()
+    private lazy var viewModel: PokemonListViewModel = .init(pokemonService: PokemonService())
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
