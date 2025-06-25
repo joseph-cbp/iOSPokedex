@@ -1,5 +1,37 @@
 # Pokedex UIKit
 
+🇺🇸[EN]
+
+A study project to evolve as an iOS Developer, focusing on applying basic and advanced concepts for the Apple platform.
+
+## 🛠️ What was used
+- **UIKit**: TableViews, StackViews, and Constraints (using AutoLayout directly in code, no Storyboards).
+- **Consuming REST APIs**: `URLSession` for making requests and converting data into app-ready models.
+- **Unit Testing**: `XCTest` for verifying logic and ensuring code quality.
+- **Best Practices & Architecture**:
+  - Applying **SOLID** principles for maintainability and scalability.
+  - **MVVM** architecture for organized responsibilities.
+  - **Delegation Pattern** for clear, decoupled communication between components.
+
+## 💡 Results and Learnings
+I deepened my understanding of the **SOLID** principles and their role in making code cleaner, more modular, and testable. The "aha" moment came when I started writing unit tests with `XCTest`: to isolate responsibilities and make maintenance easier, I had to separate concepts, create interfaces, and use mocks to abstract dependencies.
+
+This approach not only made the project more structured and testable but also broadened my understanding of architecture and software quality, preparing me for more complex iOS development challenges.
+
+## 👨‍💻 Technologies and Tools
+- Swift
+- UIKit
+- Xcode
+- REST APIs
+- XCTest
+- Git / GitHub
+
+
+________________________________
+
+
+🇧🇷[PT-Br]
+
 Um projeto de estudo para evoluir como iOS Developer, focado em aplicar conceitos básicos e avançados do desenvolvimento para a plataforma Apple.
 
 ## 🛠️ O que foi utilizado
