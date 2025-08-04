@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class NetworkManager: NetworkManagerProtocol {
     
@@ -37,6 +38,16 @@ class NetworkManager: NetworkManagerProtocol {
                 completion(.failure(error))
             }
         }.resume()
+    }
+    
+    func fetchWithCombine<T: Decodable>(_ url: URL, type: T.Type) -> AnyPublisher<T, Error>{
+        
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .mapError{$0 as Error}
+            .decode(type: type, decoder: JSONDecoder())
+            .eraseToAnyPublisher( )
+        
     }
 }
 

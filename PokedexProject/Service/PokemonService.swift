@@ -5,6 +5,7 @@
 //  Created by Joseph Pereira on 06/06/25.
 //
 import Foundation
+import Combine
 
 class PokemonService : PokemonServiceProtocol {
     let networkManager: NetworkManagerProtocol
@@ -36,5 +37,15 @@ class PokemonService : PokemonServiceProtocol {
                 completion(.failure(error))
             }
         }
+    }
+    
+    //MARK: Combine
+    func fetchPokemonListCombine() -> AnyPublisher<PokemonListResponse, Error>{
+        let urlString = "https://pokeapi.co/api/v2/pokemon?limit=151"
+        guard let url = URL(string: urlString) else {
+            return Fail(error: ServiceError.invalidURL)
+                .eraseToAnyPublisher()
+        }
+        return networkManager.fetchWithCombine(url, type: PokemonListResponse.self)
     }
 }

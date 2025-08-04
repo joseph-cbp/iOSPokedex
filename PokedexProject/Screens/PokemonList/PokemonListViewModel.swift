@@ -5,11 +5,16 @@
 //  Created by Joseph Pereira on 06/06/25.
 //
 import Foundation
+import Combine
 
-class PokemonListViewModel {
+class PokemonListViewModel: ObservableObject {
     weak var delegate: PokemonListViewModelDelegate?
     private let pokemonService: PokemonServiceProtocol
-    private(set) var pokemons: [Pokemon] = []
+    @Published private(set) var pokemons: [Pokemon] = []
+    
+    var cancellables = Set<AnyCancellable>()
+    
+    
     
     init(pokemonService: PokemonServiceProtocol) {
         self.pokemonService = pokemonService
@@ -26,7 +31,29 @@ class PokemonListViewModel {
             }
         }
     }
+    
+    func fetchPokemonsWithCombine() {
+        pokemonService.fetchPokemonListCombine()
+            .map{ response in
+                response.results.map{ $0.toDomainModel()}
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.delegate?.didFailWithError(error.localizedDescription)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] pokemons in
+                self?.pokemons = pokemons
+                self?.delegate?.didUpdatePokemonList()
+            }
+            .store(in: &cancellables)
+
+    }
 }
+
 
 
 protocol PokemonListViewModelDelegate: AnyObject {

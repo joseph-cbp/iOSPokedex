@@ -26,7 +26,8 @@ class PokemonListViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         setupUI()
-        viewModel.fetchPokemons()
+//        viewModel.fetchPokemons()
+        viewModel.fetchPokemonsWithCombine()
     }
     
     private func setupUI() {
