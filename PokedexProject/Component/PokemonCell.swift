@@ -92,19 +92,22 @@ class PokemonCell: UITableViewCell {
     
     private func loadImage(url: String){
         
-        if let url = URL(string: url){
-            URLSession.shared.dataTask(with: url) { data, _, _ in
-                guard let data = data, let image = UIImage(data: data) else { return }
-                
-                DispatchQueue.main.async {
-                    [weak self] in
-                    self?.pokemonImage.image = image
-                }
-                
-            }
-            .resume()
-        } else {
-            print("não consigo converter")
+//        if let url = URL(string: url){
+//            URLSession.shared.dataTask(with: url) { data, _, _ in
+//                guard let data = data, let image = UIImage(data: data) else { return }
+//                
+//                DispatchQueue.main.async {
+//                    [weak self] in
+//                    self?.pokemonImage.image = image
+//                }
+//                
+//            }
+//            .resume()
+//        } else {
+//            print("não consigo converter")
+//        }
+        ImageCache.shared.loadImage(from: url) { [weak self] image in
+            self?.pokemonImage.image = image
         }
     }
 }

@@ -19,6 +19,7 @@ class PokemonDetailLabelView: UIView {
         return uiView
     }()
     
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
