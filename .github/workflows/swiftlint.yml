@@ -16,7 +16,7 @@ jobs:
     steps:
     
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
     
     - name: Install Swift Lint
       run: brew install swiftlint
@@ -27,7 +27,8 @@ jobs:
       continue-on-error: true
 
     - name: Upload Swiftlint Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: swiftlint-report.txt
+        path: swiftlint-report.txt
         
