@@ -72,7 +72,7 @@ jobs:
           gem install cocoapods -v 1.15.2
           pod install --repo-update
       
-      # 6. Build e testes com cobertura
+# 6. Build e testes com cobertura
       - name: Build and Test
         run: |
           xcodebuild clean test \
@@ -80,15 +80,11 @@ jobs:
             -scheme "$SCHEME" \
             -destination "${{ matrix.destination }}" \
             -enableCodeCoverage YES \
-            -derivedDataPath DerivedData \
+            -resultBundlePath "TestResults.xcresult" \
             -parallel-testing-enabled YES \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            ONLY_ACTIVE_ARCH=NO \
-            | xcpretty --color --report html --output build/reports/tests.html
-        
-        # Se usar PROJECT ao invés de WORKSPACE, troque a linha acima por:
-        # -project "$PROJECT" \
+            ONLY_ACTIVE_ARCH=NO
       
       # 7. Gera relatório de cobertura
       - name: Generate Code Coverage Report
