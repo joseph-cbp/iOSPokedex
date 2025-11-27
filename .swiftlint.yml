@@ -1,0 +1,18 @@
+disabled_rules:
+  - line_length
+  - identifier_name
+  - vertical_whitespace
+  
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+
+included:
+  - PokedexProject
+
+excluded:
+  - PokedexProjectTests
+  - .build
+  - Pods
+  - .swiftpm
+  - DerivedData
