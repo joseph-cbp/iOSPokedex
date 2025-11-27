@@ -25,9 +25,9 @@ jobs:
         # - platform=iOS Simulator,name=iPhone 14,OS=16.4
     
     env:
-      SCHEME: "SeuAppScheme"  # ⚠️ AJUSTE AQUI
-      WORKSPACE: "SeuApp.xcworkspace"  # ⚠️ OU use PROJECT se não tiver workspace
-      # PROJECT: "SeuApp.xcodeproj"  # Use esta linha se não tiver workspace
+      SCHEME: "PokedexProject"  # ⚠️ AJUSTE AQUI
+      # WORKSPACE: "SeuApp.xcworkspace"  # ⚠️ OU use PROJECT se não tiver workspace
+      PROJECT: "PokedexProject.xcodeproj"  # Use esta linha se não tiver workspace
     
     steps:
       # 1. Checkout do código
@@ -76,7 +76,7 @@ jobs:
       - name: Build and Test
         run: |
           xcodebuild clean test \
-            -workspace "$WORKSPACE" \
+            -project "$PROJECT" \
             -scheme "$SCHEME" \
             -destination "${{ matrix.destination }}" \
             -enableCodeCoverage YES \
