@@ -16,9 +16,11 @@ struct Pokemon {
 
 extension Pokemon {
     static func mock() -> Pokemon {
-        
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/2/") else { return Pokemon(name: "Ivysaur", number: 2, pokemonImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png", pokemonUrl: nil) }
-        
+        let imageURLString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/2/")
+        else {
+            return Pokemon(name: "Ivysaur", number: 2, pokemonImage: imageURLString, pokemonUrl: nil)
+        }
         return Pokemon(name: "Ivysaur", number: 2, pokemonImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png", pokemonUrl: url)
     }
 }

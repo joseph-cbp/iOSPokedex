@@ -29,7 +29,7 @@ class PokemonDetailView: UIView {
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 200),
-            imageView.widthAnchor.constraint(equalToConstant: 200),
+            imageView.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -42,22 +42,16 @@ class PokemonDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func loadImage(url: String){
-        
-        if let url = URL(string: url){
+    private func loadImage(url: URL) {
             URLSession.shared.dataTask(with: url) { data, _, _ in
                 guard let data = data, let image = UIImage(data: data) else { return }
                 
-                DispatchQueue.main.async {
-                    [weak self] in
+                DispatchQueue.main.async { [weak self] in
                     self?.imageView.image = image
                 }
                 
             }
             .resume()
-        } else {
-            print("não consigo converter")
-        }
     }
     
     func configure(detail: Detail) {

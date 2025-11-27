@@ -34,8 +34,8 @@ class PokemonListViewModel: ObservableObject {
     
     func fetchPokemonsWithCombine() {
         pokemonService.fetchPokemonListCombine()
-            .map{ response in
-                response.results.map{ $0.toDomainModel()}
+            .map { response in
+                response.results.map { $0.toDomainModel()}
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

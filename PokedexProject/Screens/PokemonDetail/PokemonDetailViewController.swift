@@ -26,13 +26,13 @@ class PokemonDetailViewController: UIViewController {
         return view
     }()
     
-    private func setupUI(){
+    private func setupUI() {
         view.addSubview(contentView)
         view.addSubview(detailLabelView)
         setupConstraints()
     }
     
-    private func setupConstraints(){
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -86,13 +86,13 @@ class PokemonDetailViewController: UIViewController {
     }
     
     private func setupBackgroundColor(pokemon: Detail) {
-        DispatchQueue.main.async{ [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.view.backgroundColor = pokemon.types.first?.getColor()
         }
     }
 }
 
-extension PokemonDetailViewController: PokemonDetailViewModelDelegate{
+extension PokemonDetailViewController: PokemonDetailViewModelDelegate {
     func didSuccessfullyFetchPokemonDetail(pokemon: Detail) {
         contentView.configure(detail: pokemon)
         detailLabelView.configure(detail: pokemon)

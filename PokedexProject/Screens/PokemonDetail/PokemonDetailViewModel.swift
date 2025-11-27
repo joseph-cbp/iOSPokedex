@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol PokemonDetailViewModelDelegate: AnyObject{
+protocol PokemonDetailViewModelDelegate: AnyObject {
     func didSuccessfullyFetchPokemonDetail(pokemon: Detail)
     func didFailToFetchPokemonDetail(error: Error)
 }
@@ -22,7 +22,7 @@ class PokemonDetailViewModel {
         self.service = service
     }
     
-    func fetchPokemonDetail(){
+    func fetchPokemonDetail() {
         guard let url = url else { return }
         service.fetchPokemonDetail(from: url) { [weak self] result in
             switch result {

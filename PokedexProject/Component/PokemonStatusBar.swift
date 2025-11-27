@@ -62,7 +62,7 @@ class PokemonStatusBar: UIView {
         setupConstraints()
     }
     
-    private func setupConstraints(){
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             statusTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             statusTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -78,11 +78,11 @@ class PokemonStatusBar: UIView {
             
             statusBar.leadingAnchor.constraint(equalTo: baseStatusLabel.trailingAnchor, constant: 8),
             statusBar.trailingAnchor.constraint(equalTo: minStatusLabel.leadingAnchor, constant: -8),
-            statusBar.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
+            statusBar.widthAnchor.constraint(lessThanOrEqualToConstant: 150)
         ])
     }
     
-    init(){
+    init() {
         super.init(frame: .zero)
         self.setupUI()
     }
@@ -102,7 +102,7 @@ class PokemonStatusBar: UIView {
         
     }
     
-    private func calculateMaximumAndMinimum(base: Int) -> (Int, Int){
+    private func calculateMaximumAndMinimum(base: Int) -> (Int, Int) {
         
         /// Status = ((2 * Base + IV + (EV/4)) * Nível / 100) + Nível + 10
         let minValue = ((2 * base + 0 + (0 / 4)) * 100 / 100) + 100 + 10

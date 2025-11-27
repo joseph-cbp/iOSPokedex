@@ -18,7 +18,7 @@ class ImageCache {
         cache.totalCostLimit = 10 * 1024 * 1024
     }
     
-    func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void){
+    func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         if let cachedImage = cache.object(forKey: urlString as NSString) {
             completion(cachedImage)
             return
@@ -32,14 +32,14 @@ class ImageCache {
                       let image = UIImage(data: data),
                         error == nil
                 else {
-                    DispatchQueue.main.async{
+                    DispatchQueue.main.async {
                         completion(self.placeholderImage)
                     }
                     return
                 }
                 
                 self.cache.setObject(image, forKey: urlString as NSString)
-                DispatchQueue.main.async{
+                DispatchQueue.main.async {
                     completion(image)
                 }
             }

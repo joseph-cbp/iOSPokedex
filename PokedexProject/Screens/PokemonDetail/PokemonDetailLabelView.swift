@@ -96,12 +96,12 @@ class PokemonDetailLabelView: UIView {
             
             statusStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
             statusStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            statusStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            statusStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
             
         ])
     }
     
-    private func populateStackView(with status: [StatusDetail], color: UIColor){
+    private func populateStackView(with status: [StatusDetail], color: UIColor) {
         for stat in status {
             let statusView = PokemonStatusBar()
             statusView.configure(with: stat, color: color)

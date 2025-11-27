@@ -67,7 +67,7 @@ extension PokemonListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pokemon = viewModel.pokemons[indexPath.section]
         print("Selecionado:", pokemon.name, pokemon.pokemonUrl ?? "sem URL")
-        if let url = pokemon.pokemonUrl{
+        if let url = pokemon.pokemonUrl {
             navigationController?.pushViewController(PokemonDetailViewController(url: url), animated: false)
         }
     }

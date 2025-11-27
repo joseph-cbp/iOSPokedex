@@ -4,13 +4,14 @@
 //
 //  Created by Joseph Pereira on 14/06/25.
 //
+import Foundation
 
 struct Detail: Decodable {
     let id: Int
     let name: String
     let height: Double
     let weight: Double
-    let imageUrl: String
+    let imageUrl: URL
     let types: [PokemonTypes]
     let stats: [StatusDetail]
 }

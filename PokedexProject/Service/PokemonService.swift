@@ -7,7 +7,7 @@
 import Foundation
 import Combine
 
-class PokemonService : PokemonServiceProtocol {
+class PokemonService: PokemonServiceProtocol {
     let networkManager: NetworkManagerProtocol
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) {
@@ -39,8 +39,8 @@ class PokemonService : PokemonServiceProtocol {
         }
     }
     
-    //MARK: Combine
-    func fetchPokemonListCombine() -> AnyPublisher<PokemonListResponse, Error>{
+    // MARK: Combine
+    func fetchPokemonListCombine() -> AnyPublisher<PokemonListResponse, Error> {
         let urlString = "https://pokeapi.co/api/v2/pokemon?limit=151"
         guard let url = URL(string: urlString) else {
             return Fail(error: ServiceError.invalidURL)

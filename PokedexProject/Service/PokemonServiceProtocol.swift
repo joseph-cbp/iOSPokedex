@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol PokemonServiceProtocol: AnyObject{
+protocol PokemonServiceProtocol: AnyObject {
     
     func fetchPokemonList(completion: @escaping (Result<[Pokemon], Error>) -> Void)
     

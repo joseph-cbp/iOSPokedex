@@ -84,13 +84,13 @@ class PokemonCell: UITableViewCell {
         ])
     }
     
-    func configure(with pokemon: Pokemon){
+    func configure(with pokemon: Pokemon) {
         nameLabel.text = pokemon.name
         numberLabel.text = String(format: "#%03d", pokemon.number)
         loadImage(url: pokemon.pokemonImage)
     }
     
-    private func loadImage(url: String){
+    private func loadImage(url: String) {
         
 //        if let url = URL(string: url){
 //            URLSession.shared.dataTask(with: url) { data, _, _ in
@@ -111,4 +111,3 @@ class PokemonCell: UITableViewCell {
         }
     }
 }
-
