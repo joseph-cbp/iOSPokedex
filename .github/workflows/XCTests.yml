@@ -1,25 +1,114 @@
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
-name: XCTest
+name: iOS CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
+
+# Cancela workflows anteriores da mesma branch se houver novo push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-
-    runs-on: macos-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+  test:
+    name: Test iOS App
+    runs-on: macos-14  # Xcode 15.x (sempre use a versão mais recente estável)
     
-    - name: Build
-      run: swift build
-
-    - name: Run Test
-      run: swift test
+    strategy:
+      matrix:
+        # Teste em múltiplos devices/OS se necessário
+        destination:
+          - platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2
+        # Descomente para testar múltiplas versões:
+        # - platform=iOS Simulator,name=iPhone 14,OS=16.4
+    
+    env:
+      SCHEME: "PokedexProject"  # ⚠️ AJUSTE AQUI
+      # WORKSPACE: "SeuApp.xcworkspace"  # ⚠️ OU use PROJECT se não tiver workspace
+      PROJECT: "PokedexProject.xcodeproj"  # Use esta linha se não tiver workspace
+    
+    steps:
+      # 1. Checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # 2. Seleciona a versão correta do Xcode
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+      
+      # 3. Exibe informações do ambiente (debug)
+      - name: Show environment info
+        run: |
+          xcodebuild -version
+          swift --version
+          xcrun simctl list devices available
+      
+      # 4. Cache de dependências (CocoaPods/Carthage/SPM)
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        if: hashFiles('Podfile.lock') != ''
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      
+      - name: Cache SPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .build
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+      
+      # 5. Instala dependências (se usar CocoaPods)
+      - name: Install dependencies
+        if: hashFiles('Podfile') != ''
+        run: |
+          gem install cocoapods -v 1.15.2
+          pod install --repo-update
+      
+      # 6. Build e testes com cobertura
+      - name: Build and Test
+        run: |
+          xcodebuild clean test \
+            -project "$PROJECT" \
+            -scheme "$SCHEME" \
+            -destination "${{ matrix.destination }}" \
+            -enableCodeCoverage YES \
+            -derivedDataPath DerivedData \
+            -parallel-testing-enabled YES \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            ONLY_ACTIVE_ARCH=NO \
+            | xcpretty --color --report html --output build/reports/tests.html
+        
+        # Se usar PROJECT ao invés de WORKSPACE, troque a linha acima por:
+        # -project "$PROJECT" \
+      
+      # 7. Gera relatório de cobertura
+      - name: Generate Code Coverage Report
+        if: success()
+        run: |
+          xcrun xccov view --report --json DerivedData/Logs/Test/*.xcresult > coverage.json
+          xcrun xccov view --report DerivedData/Logs/Test/*.xcresult
+      
+      # 8. Upload dos resultados
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            build/reports/
+            coverage.json
+            DerivedData/Logs/Test/*.xcresult
+          retention-days: 30
+      
