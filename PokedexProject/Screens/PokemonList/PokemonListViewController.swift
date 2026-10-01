@@ -7,7 +7,7 @@
 import UIKit
 
 class PokemonListViewController: UIViewController {
-    private lazy var viewModel: PokemonListViewModel = .init(pokemonService: PokemonService())
+    private lazy var viewModel: any PokemonListViewModelProtocol = PokemonListViewModelCombine(pokemonService: PokemonService())
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -26,8 +26,7 @@ class PokemonListViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         setupUI()
-//        viewModel.fetchPokemons()
-        viewModel.fetchPokemonsWithCombine()
+        viewModel.fetchPokemons()
     }
     
     private func setupUI() {
