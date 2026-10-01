@@ -14,6 +14,8 @@ protocol PokemonServiceProtocol: AnyObject {
     
     func fetchPokemonDetail(from url: URL, completion: @escaping (Result<Detail, Error>) -> Void)
     
+}
+
+protocol PokemonCombineService: AnyObject {
     func fetchPokemonListCombine() -> AnyPublisher<PokemonListResponse, Error>
-    
 }

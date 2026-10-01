@@ -38,8 +38,9 @@ class PokemonService: PokemonServiceProtocol {
             }
         }
     }
-    
-    // MARK: Combine
+}
+
+extension PokemonService: PokemonCombineService {
     func fetchPokemonListCombine() -> AnyPublisher<PokemonListResponse, Error> {
         let urlString = "https://pokeapi.co/api/v2/pokemon?limit=151"
         guard let url = URL(string: urlString) else {
